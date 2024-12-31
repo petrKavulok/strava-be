@@ -1,0 +1,44 @@
+import { VercelRequest, VercelResponse } from '@vercel/node';
+import fetch from 'node-fetch';
+
+const AIRTABLE_API_KEY = process.env.AIRTABLE_API_KEY!;
+const BASE_ID = process.env.AIRTABLE_BASE_ID!;
+
+export default async (req: VercelRequest, res: VercelResponse) => {
+  // Enable CORS
+  res.setHeader('Access-Control-Allow-Origin', '*'); // Allow all origins, or replace '*' with your frontend URL
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS'); // Allowed methods
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type'); // Allowed headers
+
+  // Handle preflight requests
+  if (req.method === 'OPTIONS') {
+    res.status(200).end();
+    return;
+  }
+
+  try {
+    const response = await fetch(
+      `https://api.airtable.com/v0/${BASE_ID}/SportsTable`,
+      {
+        headers: {
+          Authorization: `Bearer ${AIRTABLE_API_KEY}`,
+        },
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch data from Airtable');
+    }
+
+    const airtableData:any = await response.json();
+    const formattedData = airtableData.records.map((record: any) => ({
+      id: record.id,
+      ...record.fields,
+    }));
+
+    res.status(200).json(formattedData);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Failed to fetch data' });
+  }
+};
