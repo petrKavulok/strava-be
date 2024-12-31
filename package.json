@@ -1,0 +1,29 @@
+{
+  "name": "strava-backend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "ts-node src/index.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "node-fetch": "^3.3.2"
+  },
+  "packageManager": "yarn@4.3.1+sha256.2535167e742927e1d2a1610d5004576e4e8f764d2ca5470d19536790f55cd6e2",
+  "devDependencies": {
+    "@types/cors": "^2",
+    "@types/dotenv": "^8.2.3",
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.10.2",
+    "@types/node-fetch": "^2.6.12",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.2"
+  }
+}
