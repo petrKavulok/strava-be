@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "ESNext",                 // Targets the latest ECMAScript version
-    "module": "ESNext",                 // Use ES module system
+    "module": "ES2022",                 // Use ES module system
     "moduleResolution": "node",         // Resolve modules as Node.js would
     "esModuleInterop": true,            // Enables compatibility with non-ESM modules
     "skipLibCheck": true,               // Skips type checking of declaration files for speed

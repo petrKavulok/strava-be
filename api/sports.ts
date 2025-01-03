@@ -1,15 +1,15 @@
 import { VercelRequest, VercelResponse } from '@vercel/node';
 import fetch from 'node-fetch';
 
-const AIRTABLE_API_KEY = process.env.AIRTABLE_API_KEY!;
-const BASE_ID = process.env.AIRTABLE_BASE_ID!;
-const AIRTABLE_TABLE_NAME = process.env.AIRTABLE_TABLE_NAME!;
+const AIRTABLE_API_KEY = process.env.AIRTABLE_API_KEY;
+const BASE_ID = process.env.AIRTABLE_BASE_ID;
+const AIRTABLE_TABLE_NAME = process.env.AIRTABLE_TABLE_NAME;
 
-const handler = async (req: VercelRequest, res: VercelResponse) => {
+export default async function handler(req: VercelRequest, res: VercelResponse) {
   // Enable CORS
-  res.setHeader('Access-Control-Allow-Origin', 'https://strava-fe.vercel.app/'); // Allow all origins, or replace '*' with your frontend URL
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS'); // Allowed methods
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type'); // Allowed headers
+  res.setHeader('Access-Control-Allow-Origin', 'https://strava-fe.vercel.app/');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
   // Handle preflight requests
   if (req.method === 'OPTIONS') {
@@ -42,6 +42,4 @@ const handler = async (req: VercelRequest, res: VercelResponse) => {
     console.error(error);
     res.status(500).json({ error: 'Failed to fetch data hmmmmmmm' });
   }
-};
-
-export { handler as default };
+}
