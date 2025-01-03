@@ -1,13 +1,14 @@
 {
   "compilerOptions": {
-    "module": "ESNext",
-    "target": "ES6",
+    "module": "CommonJS",
+    "target": "ES2020",
     "outDir": "./dist",
     "moduleResolution": "Node",
     "esModuleInterop": true,
     "strict": true,
     "types": ["node"] // Ensure node types are included here
   },
+  "type": "module",
   "include": ["src/**/*"],
   "exclude": ["node_modules"]
 }
