@@ -11,7 +11,7 @@ const AIRTABLE_API_KEY = process.env.AIRTABLE_API_TOKEN!;
 const BASE_ID = process.env.AIRTABLE_BASE_ID!;
 const AIRTABLE_TABLE_NAME = process.env.AIRTABLE_TABLE_NAME!;
 
-app.use(cors({ origin: 'https://https://strava-fe.vercel.app/' }));
+app.use(cors({ origin: 'https://strava-fe.vercel.app/' }));
 
 // Set up other middleware
 app.use(express.json());
@@ -41,7 +41,9 @@ app.get('/api/sports', async (req: Request, res: Response) => {
     res.status(200).json(formattedData);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Failed to fetch data here' });
+    // @ts-ignore
+    res.status(500).json({ error: error.message || 'Internal Server Error hero' });
+
   }
 });
 
