@@ -47,6 +47,16 @@
 import fetch from 'node-fetch';
 
 export default async function handler(req, res) {
+  // Allow CORS for your frontend URL
+  res.setHeader('Access-Control-Allow-Origin', 'https://strava-fe.vercel.app'); // Frontend URL (replace with your actual frontend URL)
+  res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+
+  // If it's an OPTIONS request, respond with status 200
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end();
+  }
+
   // Load environment variables
   const { AIRTABLE_API_TOKEN, AIRTABLE_BASE_ID, AIRTABLE_TABLE_NAME } = process.env;
 
