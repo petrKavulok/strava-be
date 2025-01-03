@@ -1,22 +1,22 @@
 import dotenv from 'dotenv';
 import express, { Request, Response } from 'express';
-
 import cors from 'cors';
+import fetch from 'node-fetch'; // Ensure node-fetch is installed
 
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 5001;
 const AIRTABLE_API_KEY = process.env.AIRTABLE_API_TOKEN!;
 const BASE_ID = process.env.AIRTABLE_BASE_ID!;
 const AIRTABLE_TABLE_NAME = process.env.AIRTABLE_TABLE_NAME!;
 
-app.use(cors({ origin: 'https://strava-fe.vercel.app/' }));
+// Use CORS for your frontend origin
+app.use(cors({ origin: 'https://strava-fe.vercel.app' }));
 
-// Set up other middleware
+// Middleware for JSON parsing
 app.use(express.json());
 
-
+// API route
 app.get('/api/sports', async (req: Request, res: Response) => {
   try {
     const response = await fetch(
@@ -29,22 +29,23 @@ app.get('/api/sports', async (req: Request, res: Response) => {
     );
 
     if (!response.ok) {
-      throw new Error('Failed to fetch data from Airtable');
+      throw new Error(`Failed to fetch data from Airtable: ${response.statusText}`);
     }
 
     const airtableData = await response.json();
+    // @ts-expect-error
     const formattedData = airtableData.records.map((record: any) => ({
       id: record.id,
       ...record.fields,
     }));
 
     res.status(200).json(formattedData);
-  } catch (error) {
-    console.error(error);
-    // @ts-ignore
-    res.status(500).json({ error: error.message || 'Internal Server Error hero' });
-
+  } catch (error: any) {
+    console.error('Error fetching data:', error);
+    res.status(500).json({ error: error.message || 'Internal Server Error' });
   }
 });
 
+// Start server (useful for local testing)
+const PORT = process.env.PORT || 5001;
 app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
