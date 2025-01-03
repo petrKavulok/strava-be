@@ -41,7 +41,7 @@ app.get('/api/sports', async (req: Request, res: Response) => {
     res.status(200).json(formattedData);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Failed to fetch data' });
+    res.status(500).json({ error: 'Failed to fetch data here' });
   }
 });
 
