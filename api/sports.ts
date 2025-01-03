@@ -16,30 +16,32 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     res.status(200).end();
     return;
   }
+  
+  return res.status(200).json({ message: 'Hello World' });
 
-  try {
-    const response = await fetch(
-        `https://api.airtable.com/v0/${BASE_ID}/${AIRTABLE_TABLE_NAME}?sort%5B0%5D%5Bfield%5D=weekNo&sort%5B0%5D%5Bdirection%5D=desc`,
-        {
-          headers: {
-            Authorization: `Bearer ${AIRTABLE_API_KEY}`,
-          },
-        }
-      );
+  // try {
+  //   const response = await fetch(
+  //       `https://api.airtable.com/v0/${BASE_ID}/${AIRTABLE_TABLE_NAME}?sort%5B0%5D%5Bfield%5D=weekNo&sort%5B0%5D%5Bdirection%5D=desc`,
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${AIRTABLE_API_KEY}`,
+  //         },
+  //       }
+  //     );
 
-    if (!response.ok) {
-      throw new Error('Failed to fetch data from Airtable');
-    }
+  //   if (!response.ok) {
+  //     throw new Error('Failed to fetch data from Airtable');
+  //   }
 
-    const airtableData:any = await response.json();
-    const formattedData = airtableData.records.map((record: any) => ({
-      id: record.id,
-      ...record.fields,
-    }));
+  //   const airtableData:any = await response.json();
+  //   const formattedData = airtableData.records.map((record: any) => ({
+  //     id: record.id,
+  //     ...record.fields,
+  //   }));
 
-    res.status(200).json(formattedData);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Failed to fetch data hmmmmmmm' });
-  }
+  //   res.status(200).json(formattedData);
+  // } catch (error) {
+  //   console.error(error);
+  //   res.status(500).json({ error: 'Failed to fetch data hmmmmmmm' });
+  // }
 }
