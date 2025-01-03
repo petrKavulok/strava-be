@@ -44,54 +44,38 @@
 //   }
 // };
 
-import dotenv from 'dotenv';
-import express, { Request, Response } from 'express';
-import cors from 'cors';
-import fetch from 'node-fetch'; // Ensure node-fetch is installed
+import fetch from 'node-fetch';
 
-dotenv.config();
+export default async function handler(req, res) {
+  // Load environment variables
+  const { AIRTABLE_API_TOKEN, AIRTABLE_BASE_ID, AIRTABLE_TABLE_NAME } = process.env;
 
-const app = express();
-const AIRTABLE_API_KEY = process.env.AIRTABLE_API_TOKEN!;
-const BASE_ID = process.env.AIRTABLE_BASE_ID!;
-const AIRTABLE_TABLE_NAME = process.env.AIRTABLE_TABLE_NAME!;
-
-// Use CORS for your frontend origin
-app.use(cors({ origin: 'https://strava-fe.vercel.app' }));
-
-// Middleware for JSON parsing
-app.use(express.json());
-
-// API route
-app.get('/api/sports', async (req: Request, res: Response) => {
   try {
+    // Fetch data from Airtable
     const response = await fetch(
-      `https://api.airtable.com/v0/${BASE_ID}/${AIRTABLE_TABLE_NAME}?sort%5B0%5D%5Bfield%5D=weekNo&sort%5B0%5D%5Bdirection%5D=desc`,
+      `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${AIRTABLE_TABLE_NAME}?sort%5B0%5D%5Bfield%5D=weekNo&sort%5B0%5D%5Bdirection%5D=desc`,
       {
         headers: {
-          Authorization: `Bearer ${AIRTABLE_API_KEY}`,
+          Authorization: `Bearer ${AIRTABLE_API_TOKEN}`,
         },
       }
     );
 
     if (!response.ok) {
-      throw new Error(`Failed to fetch data from Airtable: ${response.statusText}`);
+      throw new Error('Failed to fetch data from Airtable');
     }
 
-    const airtableData = await response.json();
-    // @ts-expect-error
+    // Process the Airtable response
+    const airtableData:any = await response.json();
     const formattedData = airtableData.records.map((record: any) => ({
       id: record.id,
       ...record.fields,
     }));
 
+    // Send the formatted data as a response
     res.status(200).json(formattedData);
-  } catch (error: any) {
-    console.error('Error fetching data:', error);
-    res.status(500).json({ error: error.message || 'Internal Server Error' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Failed to fetch data' });
   }
-});
-
-// Start server (useful for local testing)
-const PORT = process.env.PORT || 5001;
-app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
+}
