@@ -11,7 +11,7 @@ const AIRTABLE_API_KEY = process.env.AIRTABLE_API_TOKEN!;
 const BASE_ID = process.env.AIRTABLE_BASE_ID!;
 const AIRTABLE_TABLE_NAME = process.env.AIRTABLE_TABLE_NAME!;
 
-app.use(cors());
+app.use(cors({ origin: 'https://https://strava-fe.vercel.app/' }));
 
 // Set up other middleware
 app.use(express.json());
