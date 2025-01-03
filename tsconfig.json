@@ -1,11 +1,12 @@
 {
   "compilerOptions": {
-    "module": "ESNext",
-    "moduleResolution": "node",
-    "target": "ESNext",
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "strict": true,
-    "jsx": "react-jsx"
+    "target": "ESNext",                 // Targets the latest ECMAScript version
+    "module": "ESNext",                 // Use ES module system
+    "moduleResolution": "node",         // Resolve modules as Node.js would
+    "esModuleInterop": true,            // Enables compatibility with non-ESM modules
+    "skipLibCheck": true,               // Skips type checking of declaration files for speed
+    "strict": true,                     // Enable all strict type-checking options
+    "resolveJsonModule": true,          // Allow importing .json files
+    "allowSyntheticDefaultImports": true // Allow synthetic default imports
   }
 }

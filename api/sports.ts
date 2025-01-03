@@ -7,7 +7,7 @@ const AIRTABLE_TABLE_NAME = process.env.AIRTABLE_TABLE_NAME!;
 
 export default async (req: VercelRequest, res: VercelResponse) => {
   // Enable CORS
-  res.setHeader('Access-Control-Allow-Origin', '*'); // Allow all origins, or replace '*' with your frontend URL
+  res.setHeader('Access-Control-Allow-Origin', 'https://strava-fe.vercel.app/'); // Allow all origins, or replace '*' with your frontend URL
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS'); // Allowed methods
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type'); // Allowed headers
 
