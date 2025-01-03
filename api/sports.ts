@@ -5,7 +5,7 @@ const AIRTABLE_API_KEY = process.env.AIRTABLE_API_KEY!;
 const BASE_ID = process.env.AIRTABLE_BASE_ID!;
 const AIRTABLE_TABLE_NAME = process.env.AIRTABLE_TABLE_NAME!;
 
-export default async (req: VercelRequest, res: VercelResponse) => {
+const handler = async (req: VercelRequest, res: VercelResponse) => {
   // Enable CORS
   res.setHeader('Access-Control-Allow-Origin', 'https://strava-fe.vercel.app/'); // Allow all origins, or replace '*' with your frontend URL
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS'); // Allowed methods
@@ -43,3 +43,5 @@ export default async (req: VercelRequest, res: VercelResponse) => {
     res.status(500).json({ error: 'Failed to fetch data hmmmmmmm' });
   }
 };
+
+export { handler as default };
