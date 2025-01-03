@@ -7,7 +7,8 @@ const AIRTABLE_TABLE_NAME = process.env.AIRTABLE_TABLE_NAME;
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   // Enable CORS
-  res.setHeader('Access-Control-Allow-Origin', 'https://strava-fe.vercel.app/');
+  const allowedOrigins = ['https://strava-fe.vercel.app', 'http://strava-fe.vercel.app'];
+  res.setHeader('Access-Control-Allow-Origin', allowedOrigins);
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
@@ -39,9 +40,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   //     ...record.fields,
   //   }));
 
-  //   res.status(200).json(formattedData);
+  //   return res.status(200).json(formattedData);
   // } catch (error) {
   //   console.error(error);
-  //   res.status(500).json({ error: 'Failed to fetch data hmmmmmmm' });
+  //   return res.status(500).json({ error: 'Failed to fetch data hmmmmmmm' });
   // }
 }
